@@ -1,0 +1,50 @@
+#ifndef __MINPRIORITYQUEUE_H
+#define __MINPRIORITYQUEUE_H
+#include <iostream>
+#include "Node.h"
+#include "BSTree.h"
+
+class MinPQ
+{
+private:
+    //PRIVATE CLASS MEMBERS
+    Node** data;
+    int maxSize;
+    int heapSize;
+    bool allocated;
+
+public:
+    MinPQ(const BSTree& BST);
+    MinPQ(Node** staticTree, int n);	  //constructor known also as BuildHeap operation => Floyd's Algorithm
+    MinPQ(const MinPQ& other) = delete;
+    ~MinPQ();
+
+    //GENERAL
+    const MinPQ& operator=(const MinPQ& other) = delete;
+    void makeEmpty();
+    bool isEmpty() const;
+
+    //GETTERS
+    int getHeapSize() const;
+    int getMaxSize() const;
+    bool isDataAllocated() const;
+    
+    //PRIORITY-QUEUE OPERATIONS
+    Node** min() const;
+    Node*  deleteMin();
+    void	 insertMin(Node* node);
+
+    //HUFFMAN'S ALGORITHM OPERATION
+    Node* Huffman(int size);
+
+private:
+    //PRIVATE METHODS
+    int parentPos(int index);
+    int leftPos(int index);
+    int rightPos(int index);
+    void fixHeap(int startLocToFix);
+    void convertBSTtoMinPQData(const Node* currBSTNode);
+    void insertNodeToData(const Node& nodeToInsert);
+    void heapSort(Node** data, int n);
+};
+#endif // !__MINPRIORITYQUEUE_H
